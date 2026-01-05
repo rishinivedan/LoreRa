@@ -6,14 +6,12 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
-# 🔑 FIX: make mvnw executable
-RUN chmod +x mvnw
-
-RUN ./mvnw dependency:go-offline
+# Use sh to avoid executable permission issues
+RUN sh mvnw dependency:go-offline
 
 COPY src src
 
-RUN ./mvnw clean package -DskipTests
+RUN sh mvnw clean package -DskipTests
 
 EXPOSE 8080
 
